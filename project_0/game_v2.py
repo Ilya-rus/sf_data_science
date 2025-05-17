@@ -1,7 +1,10 @@
 import numpy as np
 
 def random_predict(number:int=1) -> int:
-    """Рандомно угадываем число
+    """Сначала устанавливаем любое random число, а потом находим новое
+    random число, но с измененным диапазоном (где на границе уже проверенное random число)
+    в зависимости от того, больше оно или меньше нужного.
+       Функция принимает загаданное число и возвращает число попыток
 
     Args:
         number (int, optional): Загаданное число. Defaults to 1.
@@ -9,15 +12,20 @@ def random_predict(number:int=1) -> int:
     Returns:
         int: Число попыток
     """
-
     count = 0
-
-    while True:
+    predict = np.random.randint(1, 101)
+    random_array_min = [1]
+    random_array_max = [101]
+    while number != predict:
         count += 1
-        predict_number = np.random.randint(1, 101) # предполагаемое число
-        if number == predict_number:
-            break # выход из цикла, если угадали
-    return(count)
+        if number > predict:
+            random_array_min.append(predict)
+            predict = np.random.randint(max(random_array_min)+1, min(random_array_max))               
+        elif number < predict:
+            random_array_max.append(predict)
+            predict = np.random.randint(max(random_array_min), min(random_array_max))
+
+    return count
 
 print(f'Количество попыток: {random_predict()}')
 
@@ -32,9 +40,9 @@ def score_game(random_predict) -> int:
     """
 
     count_ls = [] # список для сохранения количества попыток
+
     np.random.seed(1) # фиксируем сид для воспроизводимости
     random_array = np.random.randint(1, 101, size=(1000)) # загадали список чисел
-
     for number in random_array:
         count_ls.append(random_predict(number))
 
