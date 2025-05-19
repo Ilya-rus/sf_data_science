@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def random_predict(number:int=1) -> int:
     """Сначала устанавливаем любое random число, а потом находим новое
     random число, но с измененным диапазоном (где на границе уже проверенное random число)
@@ -16,6 +17,7 @@ def random_predict(number:int=1) -> int:
     predict = np.random.randint(1, 101)
     random_array_min = [1]
     random_array_max = [101]
+    
     while number != predict:
         count += 1
         if number > predict:
@@ -27,7 +29,9 @@ def random_predict(number:int=1) -> int:
 
     return count
 
+
 print(f'Количество попыток: {random_predict()}')
+
 
 def score_game(random_predict) -> int:
     """За какое количество попыток в среднем из 1000 подходов угадывает наш алгоритм
@@ -51,8 +55,10 @@ def score_game(random_predict) -> int:
     print(f'Ваш алгоритм угадывает число в среднем за: {score} попыток')
     return(score)
 
+
 # RUN
 score_game(random_predict)
+
 
 if __name__ == '__main__':
     score_game(random_predict)
